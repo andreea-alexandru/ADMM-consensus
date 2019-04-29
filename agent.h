@@ -61,8 +61,9 @@ public:
 	/* Constructor that gets the dimension of the variables */
 	Agent(const unsigned _n);
 
-/* Constructor that gets the local cost function, which we assume it is a quadratic function 1/2 x'Px + q'x + r */
-	Agent(const arma::mat _P, const arma::vec _q, const double _r);
+	/* Constructor that gets the local cost function, which we assume it is a quadratic function 1/2 x'Px + q'x + r 
+	and the ADMM parameter rho. It also initializes the initial values of x and u */
+	Agent(const arma::mat _P, const arma::vec _q, const double _r, const double _rho);
 
 	/* Virtual destructor */
 	virtual ~Agent();

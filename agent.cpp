@@ -23,11 +23,12 @@ Agent::Agent(const unsigned _n) {
 	u = randu<vec>(n);
 }
 
-/* Constructor that gets the local cost function, which we assume it is a quadratic function 1/2 x'Px + q'x + r. 
-It also initializes the initial values of x and u */
-Agent::Agent(const mat _P, const vec _q, const double _r)
+/* Constructor that gets the local cost function, which we assume it is a quadratic function 1/2 x'Px + q'x + r 
+and the ADMM parameter rho. It also initializes the initial values of x and u */
+Agent::Agent(const mat _P, const vec _q, const double _r, const double _rho)
 {
 	costs.P = _P; costs.q = _q; costs.r = _r;
+	rho = _rho;
 	n = costs.P.n_rows;
 	x = randu<vec>(n);
 	u = randu<vec>(n);
@@ -45,6 +46,7 @@ vec Agent::getValueOfz(){
 /* Set local value of z */
 void Agent::setValueOfz(const arma::vec _z){
 	z = _z;
+	Agent::updateValueOfu();
 }
 
 /* Get value of x */
@@ -74,7 +76,6 @@ cost Agent::getValueOfCosts(){
 
 /* Compute local value of the primal iterate x at the current iteration */
 void Agent::updateValueOfx(){
-	vec x_ = Agent::getValueOfx();
 	vec u_ = Agent::getValueOfu();
 	vec z_ = Agent::getValueOfz();
 	double rho_ = Agent::getValueOfrho();
@@ -83,7 +84,7 @@ void Agent::updateValueOfx(){
 
 	mat P_ = costs.P; vec q_ = costs.q;
 
-	x_ = inv( P_ + rho_ * eye<mat>(n_,n_) ) * (rho_ * (z_ - u_) - q_ );
+	x = inv( P_ + rho_ * eye<mat>(n_,n_) ) * (rho_ * (z_ - u_) - q_ );
 
 	Agent::updateValueOfz();
 
