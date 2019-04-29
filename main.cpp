@@ -10,8 +10,8 @@ Solve a consensus problem using ADMM.
 using namespace std;
 using namespace arma;
 
-const int N_agents = 4;
-const int steps = 40; // time steps in ADMM algorithm
+const int N_agents = 10;
+const int steps = 15; // time steps in ADMM algorithm
 const int states = 5; // dimension of state space for each agent
 
 
@@ -63,7 +63,7 @@ void initialize_agents(std::vector<Agent>& agents){
 	for (int i=0;i<N_agents;i++){
 
 		mat P;
-		vec q;
+		vec q(states);
 		double r;
 
 		arma_rng::set_seed(i);

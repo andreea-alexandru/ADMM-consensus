@@ -7,7 +7,6 @@ Solve a consensus problem using ADMM.
 
 #include <iostream>
 #include <armadillo>
-// #include "admm_solver.h"
 
 
 struct cost {

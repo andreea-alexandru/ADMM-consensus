@@ -35,7 +35,8 @@ Tells agents to compute one iteration of updates to their local variables.
 		for(int current = 0; current < N; current++){
 			z += agents[current].getValueOfz();
 		}
-		
+		z /= N;
+
 		z.print("Global z:");
 
 		for(int current = 0; current < N; current++){
