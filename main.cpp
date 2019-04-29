@@ -1,12 +1,17 @@
+/*
+Solve a consensus problem using ADMM. 
+ */
+
 #include <iostream>
 #include <armadillo>
+#include "agent.h"
 #include "admm_solver.h"
 
 using namespace std;
 using namespace arma;
 
 const int N_agents = 4;
-const int steps = 7;
+const int steps = 7; // time steps in ADMM algorithm
 const int n_states = 5; // dimension of state space for each agent
 
 void test_admm_solver(){
@@ -25,8 +30,16 @@ void test_armadillo(){
 	res.print("Matrix multiplication:");
 }
 
-int main(){
+
+int main(int argc, char *argv[]) {
 	// test_admm_solver();
-	test_armadillo();
+	// test_armadillo();
+
+	arma_rng::set_seed(42);
+
+	Agent agent(4);
+	agent.printx();
 	return 0;
+
 }
+
