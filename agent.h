@@ -39,13 +39,13 @@ private:
 	void updateValueOfz();
 
 	/* Get value of x */
-	arma::vec getValueOfx();
+	arma::vec* getValueOfx();
 
 	/* Get value of u */
-	arma::vec getValueOfu();	
+	arma::vec* getValueOfu();	
 
 	/* Return costs P, q, r */
-	cost getValueOfCosts();		
+	cost* getValueOfCosts();		
 
 	friend class ADMM_solver;
 
@@ -73,11 +73,11 @@ public:
 	/* Set local value of z */
 	void setValueOfz(const arma::vec _z);
 
-	/* Return dimension of x, n */
-	unsigned getValueOfn();
+	/* Return dimension of x: n */
+	unsigned* getValueOfn();
 
 	/* Return ADMM parameter rho */
-	double getValueOfrho();		
+	double* getValueOfrho();		
 
 	/* Print current iterate x */
 	void printx();

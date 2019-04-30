@@ -50,41 +50,41 @@ void Agent::setValueOfz(const arma::vec _z){
 }
 
 /* Get value of x */
-vec Agent::getValueOfx(){
-	return x;
+vec* Agent::getValueOfx(){
+	return &x;
 }
 
 /* Get value of u */
-vec Agent::getValueOfu(){
-	return u;
+vec* Agent::getValueOfu(){
+	return &u;
 }	
 
 /* Return dimension of x, n */
-unsigned Agent::getValueOfn(){
-	return n;
+unsigned* Agent::getValueOfn(){
+	return &n;
 }
 
 /* Return ADMM parameter rho */
-double Agent::getValueOfrho(){
-	return rho;
+double* Agent::getValueOfrho(){
+	return &rho;
 }
 
 /* Return cost in the objective function */
-cost Agent::getValueOfCosts(){
-	return costs;
+cost* Agent::getValueOfCosts(){
+	return &costs;
 }
 
 /* Compute local value of the primal iterate x at the current iteration */
 void Agent::updateValueOfx(){
-	vec u_ = Agent::getValueOfu();
+	vec* u_ = Agent::getValueOfu();
 	vec z_ = Agent::getValueOfz();
-	double rho_ = Agent::getValueOfrho();
-	unsigned n_ = Agent::getValueOfn();
-	cost costs = Agent::getValueOfCosts();
+	double* rho_ = Agent::getValueOfrho();
+	unsigned* n_ = Agent::getValueOfn();
+	cost* costs = Agent::getValueOfCosts();
 
-	mat P_ = costs.P; vec q_ = costs.q;
+	mat P_ = costs->P; vec q_ = costs->q;
 
-	x = inv( P_ + rho_ * eye<mat>(n_,n_) ) * (rho_ * (z_ - u_) - q_ );
+	x = inv( P_ + *rho_ * eye<mat>(*n_,*n_) ) * (*rho_ * (z_ - *u_) - q_ );
 
 	Agent::updateValueOfz();
 
@@ -92,11 +92,11 @@ void Agent::updateValueOfx(){
 
 /* Compute local value of the dual iterate u at the current iteration */
 void Agent::updateValueOfu(){
-	vec x_ = Agent::getValueOfx();
-	vec u_ = Agent::getValueOfu();
+	vec* x_ = Agent::getValueOfx();
+	vec* u_ = Agent::getValueOfu();
 	vec z_ = Agent::getValueOfz();
 
-	u = u_ + x_ - z_;
+	u = *u_ + *x_ - z_;
 
 	Agent::updateValueOfx();
 }
@@ -104,23 +104,23 @@ void Agent::updateValueOfu(){
 
 /* Compute local value of the dual iterate z at the current iteration */
 void Agent::updateValueOfz(){
-	vec x_ = Agent::getValueOfx();
-	vec u_ = Agent::getValueOfu();	
-	vec z = x_ - u_;
+	vec* x_ = Agent::getValueOfx();
+	vec* u_ = Agent::getValueOfu();	
+	vec z = *x_ - *u_;
 }
 
 /* Print current iterate x */
 void Agent::printx()
 {
-	vec x_ = Agent::getValueOfx();
-	x_.print("x:");	
+	vec* x_ = Agent::getValueOfx();
+	x_->print("x:");	
 }
 
 /* Print current iterate u */
 void Agent::printu()
 {
-	vec u_ = Agent::getValueOfu();
-	u_.print("u:");	
+	vec* u_ = Agent::getValueOfu();
+	u_->print("u:");	
 }
 
 /* Print current iterate z */
